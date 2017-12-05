@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Chat</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="sendPicture()"><ion-icon name="image" ></ion-icon> Send Image</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="chat-view" id="chat-view">  
+  <!-- <div class="messages">
+      <div class="message" *ngFor="let chat of chats | async" [ngClass]="{'me': uid === chat.from}">
+            <span *ngIf="chat.message">{{chat.message}}</span>
+            <img *ngIf="chat.picture" src="{{chat.picture}}" class="picture">
+      </div>
+  </div> -->
+  <div class="chat">
+
+      <div class="row" *ngFor="let chat of chats | async">
+       <div [ngClass]="{'avatar-right' : uid === chat.from , 'avatar-left' : uid !== chat.from}">
+         <img *ngIf="!user.picture" src="http://poolwallet.com/assets/img/default.jpg" class="avatar">
+            <img *ngIf="user.picture  && uid === chat.from" src="{{user.picture}}" class="avatar"/>
+        </div> 
+        <span class="bubble" [ngClass]="{'me' : uid === chat.from , 'you' : uid !== chat.from }">{{chat.message}}        {{chat.message.time}}</span>
+        <img *ngIf="chat.picture" src="{{chat.picture}}" class="picture">
+      </div>
+      <!-- <div class="row" >
+              <div class="avatar-right"> <img src="http://poolwallet.com/assets/img/default.jpg" class="avatar"></div>
+        <span class="bubble you">
+        Hi. I'm an expandeable chat box with box shadow. How are you? I expand     horizontally and vertically, as you can see here.
+        Hello there!</span>
+      </div>
+      <div class="bubble me">Awesome.</div> -->
+      </div>
+
+  <!-- <div class="chat">
+      <div class="row"  *ngFor="let chat of chats | async">
+        <div  [ngClass]="{'avatar-left': uid !== chat.from}">
+         <img src="http://poolwallet.com/assets/img/default.jpg" class="avatar">
+        </div> 
+        <span class="bubble" [ngClass]="{'me': uid === chat.from , 'you': uid !== chat.from}">{{chat.message}}</span>
+      </div>
+  </div> -->
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col width-10>
+          <ion-spinner *ngIf="!(chats)"></ion-spinner>
+      </ion-col>
+      
+      <ion-col width-70 [hidden]="!chats">
+          <ion-input type="text"  placeholder="Enter Message"
+              [(ngModel)]="message">
+          </ion-input>
+      </ion-col>
+      <ion-col width-20 [hidden]="!chats">
+          <button ion-button full (click)="sendMessage()"><ion-icon name="send"></ion-icon></button>
+      </ion-col>
+    </ion-row>    
+  </ion-toolbar>
+</ion-footer>
